@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f0f0f0;
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .container {
+            background: rgba(30, 30, 46, 0.85);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(76, 201, 240, 0.5);
+        }
+        
+        .header h1 {
+            color: #4cc9f0;
+            font-size: 36px;
+            margin: 0 0 10px 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .section {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(40, 40, 60, 0.6);
+            border-radius: 10px;
+            border-left: 4px solid #4cc9f0;
+        }
+        
+        .section h2 {
+            color: #72efdd;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .summary-item {
+            background: rgba(50, 50, 70, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .summary-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .summary-emoji {
+            font-size: 20px;
+        }
+        
+        .summary-name {
+            color: #b8b8d8;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .summary-values {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .summary-value {
+            color: #72efdd;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .summary-judge {
+            color: #ffb347;
+            font-style: italic;
+            font-size: 14px;
+        }
+        
+        .talents-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .talent-item {
+            background: rgba(67, 97, 238, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4361ee;
+        }
+        
+        .talent-name {
+            color: #72efdd;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .talent-description {
+            color: #b8b8d8;
+            font-size: 14px;
+        }
+        
+        .talent-grade {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        .events-container {
+            margin-top: 15px;
+            padding-right: 10px;
+        }
+        
+        .event-item {
+            background: rgba(50, 50, 70, 0.5);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 3px solid #f72585;
+        }
+        
+        .event-age {
+            color: #f72585;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .event-content {
+            color: #e0e0f0;
+            white-space: pre-line;
+            line-height: 1.5;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #8888aa;
+            font-size: 14px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            color: #8888aa;
+            font-size: 14px;
+        }
+        
+        /* 滚动条样式 */
+        .events-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .events-container::-webkit-scrollbar-track {
+            background: rgba(40, 40, 60, 0.3);
+            border-radius: 4px;
+        }
+        
+        .events-container::-webkit-scrollbar-thumb {
+            background: #4361ee;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 人生重开模拟器</h1>
+            <p>人生轨迹总览</p>
+        </div>
+        
+        {{if summary && summary.length > 0}}
+        <div class="section">
+            <h2>📊 人生总结</h2>
+            <div class="summary-grid">
+                {{each summary}}
+                <div class="summary-item">
+                    <div class="summary-header">
+                        <span class="summary-emoji">{{$value.emoji}}</span>
+                        <span class="summary-name">{{$value.name}}</span>
+                    </div>
+                    <div class="summary-values">
+                        <span class="summary-value">{{$value.value}}</span>
+                        <span class="summary-judge">{{$value.judge}}</span>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        {{/if}}
+        
+        {{if talents && talents.length > 0}}
+        <div class="section">
+            <h2>🌟 天赋 ({{talents.length}}个)</h2>
+            <div class="talents-container">
+                {{each talents}}
+                <div class="talent-item">
+                    <div class="talent-name">
+                        {{$value.name}}
+                        {{if $value.grade > 0}}
+                        <span class="talent-grade">等级{{$value.grade}}</span>
+                        {{/if}}
+                    </div>
+                    {{if $value.description}}
+                    <div class="talent-description">{{$value.description}}</div>
+                    {{/if}}
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        {{/if}}
+        
+        {{if events && events.length > 0}}
+        <div class="section">
+            <h2>📜 人生轨迹</h2>
+            <div class="stats">
+                <span>总事件数: {{totalEvents}}</span>
+            </div>
+            <div class="events-container">
+                {{each events}}
+                <div class="event-item">
+                    <div class="event-age">🎯 {{$value.age}}岁</div>
+                    <div class="event-content">{{$value.content}}</div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        {{/if}}
+        
+        <div class="footer">
+            <p>输入 #人生重开 颜值 智力 体质 家境 快乐 开启新的人生</p>
+            <p>输入 #随机人生重开 随机分配属性并开始游戏</p>
+            <p>Generated by Yunzai-Bot</p>
+        </div>
+    </div>
+</body>
+</html>
