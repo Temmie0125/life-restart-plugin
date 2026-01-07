@@ -22,7 +22,7 @@
 1.将插件文件夹放入Yunzai的plugins目录，或者在Yunzai根目录执行下列命令克隆本仓库：
 
 ```bash
-git clone --depth=1 https://github.com/Temmie0125/life-restart ./plugins/life-restart
+git clone --depth=1 https://github.com/Temmie0125/life-restart-plugin ./plugins/life-restart
 ```
 
 2.重启Yunzai Bot
